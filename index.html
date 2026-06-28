@@ -61,7 +61,81 @@
     </style>
 </head>
 <body>
-    <a href="login.html" style="position:fixed;top:10px;right:10px;color:white;background:#e94560;padding:10px 20px;border-radius:20px;text-decoration:none;z-index:1000;font-size:14px;">🔐 Login</a>
+    <script>
+  // If not logged in, show login screen
+  if (!localStorage.getItem('library_user')) {
+    document.body.innerHTML = `
+      <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .login-box {
+          font-family: Arial, sans-serif;
+          background: #1a1a2e;
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 20px;
+        }
+        .login-box .box {
+          background: white;
+          border-radius: 15px;
+          padding: 40px;
+          width: 100%;
+          max-width: 400px;
+          text-align: center;
+        }
+        .login-box h1 { color: #1a1a2e; margin-bottom: 10px; }
+        .login-box p { color: #666; margin-bottom: 30px; }
+        .login-box input {
+          width: 100%;
+          padding: 14px;
+          margin-bottom: 15px;
+          border: 2px solid #ddd;
+          border-radius: 10px;
+          font-size: 16px;
+        }
+        .login-box button {
+          width: 100%;
+          padding: 15px;
+          background: #e94560;
+          color: white;
+          border: none;
+          border-radius: 10px;
+          font-size: 16px;
+          font-weight: bold;
+          cursor: pointer;
+        }
+        .login-box .err { color: red; margin-bottom: 15px; display: none; }
+      </style>
+      <div class="login-box">
+        <div class="box">
+          <h1>📚 Library Login</h1>
+          <p>Enter your details to continue</p>
+          <div class="err" id="loginErr"></div>
+          <input type="email" id="loginEmail" placeholder="Email">
+          <input type="password" id="loginPass" placeholder="Password">
+          <button onclick="doLogin()">Sign In</button>
+        </div>
+      </div>
+      <script>
+        function doLogin() {
+          var email = document.getElementById('loginEmail').value;
+          var pass = document.getElementById('loginPass').value;
+          var err = document.getElementById('loginErr');
+          if (pass.length < 6) {
+            err.textContent = 'Password must be 6+ characters';
+            err.style.display = 'block';
+            return;
+          }
+          localStorage.setItem('library_user', email);
+          location.reload();
+        }
+      </script>
+    `;
+  }
+    </script>
+    <a href="#" onclick="localStorage.removeItem('library_user');location.reload();" style="position:fixed;top:10px;right:10px;color:white;background:#e94560;padding:10px 20px;border-radius:20px;text-decoration:none;z-index:1000;font-size:14px;">🚪 Logout</a>
+    
     <h1>📚 Library Management System</h1>
     <div id="messageArea"></div>
 
