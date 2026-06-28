@@ -303,5 +303,17 @@
             if (e.key === 'Enter') submitAction();
         });
     </script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('Service Worker registered');
+                })
+                .catch(function(error) {
+                    console.log('Service Worker registration failed');
+                });
+        }
+    </script>
 </body>
 </html>
